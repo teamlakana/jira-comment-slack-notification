@@ -1,17 +1,14 @@
 {
-  "name": "jira-issue-commented-slack-notifications",
-  "version": "1.0.0",
-  "description": "get notified when someone user mentions you in a JIRA comment",
+  "name": "jira-mention-bot",
+  "version": "0.0.1",
+  "description": "Get notified when someone user mentions you in a JIRA comment",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app/app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mike Solomon",
+  "author": "LAKANA",
   "license": "MIT",
-  "engines": {
-    "node": "6.6.0"
-  },
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
