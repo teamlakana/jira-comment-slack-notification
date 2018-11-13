@@ -1,29 +1,29 @@
 var
-  mongoose = require('mongoose'),
+  dynamoose = require('dynamoose');
   utils = require('../utils');
 
-var userSchema = new mongoose.Schema({
+var userSchema = new dynamoose.Schema({
   slackUsername: String,
   jiraUsername: String,
   jiraToken: String,
   jiraTokenSecret: String
 });
 
-var User = mongoose.model('Users', userSchema);
+var User = dynamoose.model('users', userSchema);
 
 var functions = {
-  update: function(mongoId, updates) {
-    console.log('I AM UPDATING USER ' + mongoId)
+  update: function(dynaId, updates) {
+    console.log('I AM UPDATING USER ' + dynaId)
     return new Promise(function(resolve, reject) {
       User.update(
-        { _id: mongoId },
-        { $set: updates },
+        { _id: dynaId },
+        { $PUT: updates },
         function(err, result) {
           if (err) {
             return reject(err);
           } else {
-            User.findOne({
-              _id: mongoId
+            User.queryOne({
+              _id: dynaId
             }, function(err, user) {
               if(!err) {
                 return resolve(user)
@@ -58,7 +58,7 @@ var functions = {
   getByJiraUsername: function(jiraUsername) {
     return new Promise(function(resolve, reject) {
 
-      User.findOne({
+      User.QueryOne({
         jiraUsername: jiraUsername
       }, function(err, user) {
         if(!err) {
@@ -73,7 +73,7 @@ var functions = {
   getBySlackUsername: function(slackUsername) {
     return new Promise(function(resolve, reject) {
       console.log("GETTING USER")
-      User.findOne({
+      User.queryOne({
         slackUsername: slackUsername
       }, function(err, user) {
         console.log("ERROR" + err)
@@ -90,7 +90,7 @@ var functions = {
   getBySlackUserId: function(slackUserId) {
     return new Promise(function(resolve, reject) {
 
-      User.findOne({
+      User.queryOne({
         slackUserId: slackUserId
       }, function(err, user) {
         if(!err) {

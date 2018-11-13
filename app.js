@@ -3,27 +3,28 @@ const
   express = require('express'),
   exphbs = require('express-handlebars'),
   bodyParser = require('body-parser'),
-  slack = require('./slack'),
-  user = require('./user'),
-  jira = require('./jira'),
-  utils = require('./utils'),
   passport = require('passport'),
   AtlassianOAuthStrategy = require('passport-atlassian-oauth').Strategy,
   request = require('request'),
-  mongoose = require('mongoose'),
+  dynamoose = require('dynamoose'),
   APP_URL = process.env.APP_URL || `http://localhost:5000/`,
   JIRA_URL = process.env.JIRA_URL,
-  MONGO_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/mongo_test";
+  DYNA_SUFFIX = process.env.DYNA_SUFFIX || "dev";
 
 let privateKey = Buffer.from(process.env.RSA_PRIVATE_KEY, 'base64').toString();
 
-mongoose.connect(MONGO_URI, function (err, res) {
-  if (err) {
-  console.log ('ERROR connecting to: ' + MONGO_URI + '. ' + err);
-  } else {
-  console.log ('Succeeded connected to: ' + MONGO_URI);
-  }
+dynamoose.setDefaults({
+  prefix: 'jira-mention-bot-',
+  suffix: '-' + `${DYNA_SUFFIX}`
+  // create: false 
 });
+
+// Order is important, don't bring in ./user before we can set some defaults/etc
+const
+  slack = require('./slack'),
+  user = require('./user'),
+  jira = require('./jira'),
+  utils = require('./utils');
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
