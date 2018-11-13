@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Show commands, exit on error/unset var
-set -xe
+# Show commands
+#set -x
+# Exit on error/unset var
+set -e
 
 # Pull in build.env for Configuration
 source ./build.vars
