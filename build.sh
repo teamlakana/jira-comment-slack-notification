@@ -32,6 +32,7 @@ fi
 
 # Identification of this build
 COMMIT=$(git log -1 --pretty=%H)
+BUILD="${bamboo_planKey}-${bamboo_buildNumber}"
 
 [ -f package.json ] && VERSION=$(cat package.json | jq -r '.version')
 [ -f pom.xml ] && VERSION=$(mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q)
