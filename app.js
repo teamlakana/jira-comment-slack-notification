@@ -342,6 +342,10 @@ app.post('/comment-created', function(req, res) {
 
 })
 
+app.get('/health', function (req, res, next) {
+  res.json({status: 'UP'});
+})
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
