@@ -8,7 +8,7 @@ set -e
 # Pull in build.env for Configuration
 source ./build.vars
 
-if [ -z ${NAMESPACE} || -z ${APP} || -z ${AWS_REGION} ]
+if [[ -z ${NAMESPACE} || -z ${APP} || -z ${AWS_REGION} ]]
 then
   echo "Something is wrong, missing variables from build.vars"
   exit 1
@@ -34,10 +34,10 @@ fi
 COMMIT=$(git log -1 --pretty=%H)
 BUILD="${bamboo_planKey}-${bamboo_buildNumber}"
 
-[ -f package.json ] && VERSION=$(cat package.json | jq -r '.version')
-[ -f pom.xml ] && VERSION=$(mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q)
+[[ -f 'package.json' ]] && VERSION=$(cat package.json | jq -r '.version')
+[[ -f 'pom.xml' ]] && VERSION=$(mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q)
 
-if [ -z ${VERSION} ]
+if [[ -z ${VERSION} ]]
 then
   echo "Something is wrong, could not find and set VERISON"
   exit 1
@@ -50,7 +50,7 @@ docker build -t "${NAMESPACE}/${APP}" .
 for tag in {latest,${COMMIT},${BUILD},${VERSION}}
 do
   # If BAMBOO_BUILD is just '-' then we don't have the plan variables, continue
-  if [[ "${tag}" == "-" ]] ; then continue ; fi
+  if [[ ${tag} == '-' ]] ; then continue ; fi
   docker tag "${NAMESPACE}/${APP}" "${AWS_ECR_URI}:${tag}"
   #docker push "${AWS_ECR_URI}:${tag}"
 done
