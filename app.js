@@ -285,7 +285,7 @@ app.post('/msg-wake-up', function(req, res) {
   } else {
     //wake up!
     console.log('Im up!')
-    res.send(200)
+    res.sendStatus(200)
   }
 })
 
