@@ -70,6 +70,12 @@ To setup this application you'll need:
   - Sign up by messaging the bot you created with the word "signup" -- click the link that the bot responds with to Auth with Jira
 8. **Usage**
   - @mention your username in a Jira comment to get a message in Slack
+
+## AWS DocumentDB
+
+You can leverage DocumentDB by using a URI like: ```MONGODB_URI=mongodb://{username}:{password}@{cluster endpoint}:27017/jira-comment-slack-notification?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem```
+
+If using the provided Dockerfile, then rds-combinded-ca-bundle.pem will be fetched already in the image. If not you must fetch it yourself.
   
 ## Development
 - When working locally, create a .env file in your local environment with the same Key=Value pairs that were used in Step 3 separated by new lines. Example: JIRA_URL='https://YOUR-URL.atlassian.net'  

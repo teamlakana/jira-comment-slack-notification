@@ -17,13 +17,16 @@ const
 
 let privateKey = Buffer.from(process.env.RSA_PRIVATE_KEY, 'base64').toString();
 
+// mongoose 5.x
+mongoose.set('useNewUrlParser', true);
 mongoose.connect(MONGO_URI, function (err, res) {
   if (err) {
-  console.log ('ERROR connecting to: ' + MONGO_URI + '. ' + err);
+    console.log ('ERROR connecting to: ' + MONGO_URI + '. ' + err);
   } else {
-  console.log ('Succeeded connected to: ' + MONGO_URI);
+    console.log ('Succeeded connected to: ' + MONGO_URI);
   }
 });
+
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
